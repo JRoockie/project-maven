@@ -13,11 +13,49 @@
         <maven.compiler.target>18</maven.compiler.target>
     </properties>
 
+
+    <repositories>
+        <repository>
+            <id>localRep</id>
+            <name>project-maven</name>
+            <url>file:${project.basedir}/lib</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>18.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.8.2</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.local</groupId>
+            <artifactId>desktop-game-engine</artifactId>
+            <version>1.0</version>
+        </dependency>
 
     </dependencies>
 
+
     <build>
+
         <plugins>
             <!-- Usual compilation -->
             <plugin>
@@ -29,7 +67,6 @@
                 </configuration>
             </plugin>
 
-            <!-- Run java-fx app over Maven -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -38,7 +75,10 @@
                     <mainClass>com.javarush.games.racer.RacerGame</mainClass>
                 </configuration>
             </plugin>
+
+
         </plugins>
+
     </build>
 
 </project>
