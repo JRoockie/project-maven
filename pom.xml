@@ -48,9 +48,9 @@
 
             <groupId>com.javarush</groupId>
             <artifactId>engine</artifactId>
-<!--            <scope>system</scope>-->
+            <!--            <scope>system</scope>-->
             <version>1.0</version>
-<!--            <systemPath>${project.basedir}/lib/desktop-game-engine.jar</systemPath>-->
+            <!--            <systemPath>${project.basedir}/lib/desktop-game-engine.jar</systemPath>-->
 
         </dependency>
 
@@ -81,8 +81,72 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <outputDirectory>${project.build.directory}/dependencies</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Rsrc-Main-Class>com.javarush.games.racer.RacerGame</Rsrc-Main-Class>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/StrangeTest.java</exclude>
+                    </excludes>
+                </configuration>
+
+
+            </plugin>
+
 
         </plugins>
+
+        <resources>
+        <resource>
+            <directory>${project.basedir}/lib</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+            <targetPath>lib/</targetPath>
+        </resource>
+        </resources>
 
     </build>
 
