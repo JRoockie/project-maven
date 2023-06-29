@@ -16,9 +16,9 @@
 
     <repositories>
         <repository>
-            <id>localRep</id>
-            <name>project-maven</name>
-            <url>file:${project.basedir}/lib</url>
+            <id>com.lib</id>
+            <name>lib</name>
+            <url>${project.basedir}\lib</url>
         </repository>
     </repositories>
 
@@ -44,12 +44,16 @@
             <scope>test</scope>
         </dependency>
 
-
         <dependency>
-            <groupId>com.local</groupId>
+
+            <groupId>com.javarush</groupId>
             <artifactId>desktop-game-engine</artifactId>
+            <scope>system</scope>
             <version>1.0</version>
+            <systemPath>${project.basedir}/lib/desktop-game-engine.jar</systemPath>
+
         </dependency>
+
 
     </dependencies>
 
@@ -72,6 +76,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
+
                     <mainClass>com.javarush.games.racer.RacerGame</mainClass>
                 </configuration>
             </plugin>
