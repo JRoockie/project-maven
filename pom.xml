@@ -16,7 +16,7 @@
 
     <repositories>
         <repository>
-            <id>com.lib</id>
+            <id>lib</id>
             <name>lib</name>
             <url>${project.basedir}\lib</url>
         </repository>
@@ -47,10 +47,10 @@
         <dependency>
 
             <groupId>com.javarush</groupId>
-            <artifactId>desktop-game-engine</artifactId>
-            <scope>system</scope>
+            <artifactId>engine</artifactId>
+<!--            <scope>system</scope>-->
             <version>1.0</version>
-            <systemPath>${project.basedir}/lib/desktop-game-engine.jar</systemPath>
+<!--            <systemPath>${project.basedir}/lib/desktop-game-engine.jar</systemPath>-->
 
         </dependency>
 
