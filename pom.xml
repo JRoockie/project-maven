@@ -18,7 +18,7 @@
         <repository>
             <id>lib</id>
             <name>lib</name>
-            <url>${project.basedir}\lib</url>
+            <url>${project.basedir}/lib</url>
         </repository>
     </repositories>
 
@@ -59,6 +59,13 @@
 
 
     <build>
+        <resources>
+            <resource>
+                <directory>${project.build.directory}/dependency</directory>
+                <targetPath>/lib</targetPath>
+            </resource>
+        </resources>
+
 
         <plugins>
             <!-- Usual compilation -->
@@ -72,6 +79,21 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-install-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+
+            <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
@@ -81,22 +103,41 @@
                 </configuration>
             </plugin>
 
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-assembly-plugin</artifactId>-->
+            <!--                <version>3.6.0</version>-->
+            <!--                <configuration>-->
+            <!--                    <descriptorRefs>-->
+            <!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
+            <!--                    </descriptorRefs>-->
+            <!--                    <outputDirectory>${project.build.directory}/dependencies</outputDirectory>-->
+            <!--                </configuration>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>make-assembly</id>-->
+            <!--                        <phase>generate-resources</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>single</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.6.0</version>
                 <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <outputDirectory>${project.build.directory}/dependencies</outputDirectory>
+                    <outputDirectory>${project.build.directory}/dependency</outputDirectory>
+                    <includeScope>compile</includeScope>
+
                 </configuration>
+
                 <executions>
                     <execution>
-                        <id>make-assembly</id>
-                        <phase>compile</phase>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>copy-dependencies</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -107,6 +148,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.3.0</version>
+<!--                <executions>-->
+                    <!--                <execution>-->
+                    <!--                    <phase>compile</phase>-->
+                    <!--                </execution>-->
+<!--                </executions>-->
                 <configuration>
                     <archive>
                         <manifest>
@@ -116,6 +162,7 @@
                         </manifest>
                         <manifestEntries>
                             <Rsrc-Main-Class>com.javarush.games.racer.RacerGame</Rsrc-Main-Class>
+                            <Class-Path>./</Class-Path>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -138,15 +185,7 @@
 
         </plugins>
 
-        <resources>
-        <resource>
-            <directory>${project.basedir}/lib</directory>
-            <includes>
-                <include>*.jar</include>
-            </includes>
-            <targetPath>lib/</targetPath>
-        </resource>
-        </resources>
+
 
     </build>
 
